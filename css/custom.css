@@ -1,0 +1,24 @@
+/* your styles go here */
+.table-cart th {
+    text-align: center;
+    vertical-align: middle;
+}
+.table-cart td {
+    vertical-align: middle;
+}
+.table-cart td.number {
+    text-align: right;
+}
+.table-cart td.number input {
+    text-align: right;
+}
+.table-cart th.total-amount {
+    text-align: right;
+}
+.table-cart td#total_amount {
+    text-align: right;
+    font-size: 150%;
+}
+.table-cart .prod-img {
+    width: 80px;
+}

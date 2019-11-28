@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/custom.css">
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 	  
@@ -39,6 +40,7 @@
 	          <li class="nav-item"><a href="#resume-section" class="nav-link"><span>Resume</span></a></li>
 	          <li class="nav-item"><a href="#services-section" class="nav-link"><span>Services</span></a></li>
 	          <li class="nav-item"><a href="#projects-section" class="nav-link"><span>Projects</span></a></li>
+			  <li class="nav-item"><a href="#products-section" class="nav-link"><span>Products</span></a></li>
 	          <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li>
 	        </ul>
 	      </div>
@@ -466,6 +468,45 @@
     	</div>
     </section>
 
+    <section class="ftco-section ftco-project" id="products-section" >
+
+    	<div class="container-fluid px-md-5">
+    		<div class="row no-gutters justify-content-center pb-5">
+			  <div class="col-md-12 heading-section text-center ftco-animate">
+				<h1 class="big big-2">products</h1>
+				<h2 class="mb-4">My Products</h2>
+				<p>You can select product and checkout.</p>
+			  </div>
+			</div>
+		  <div class="row">
+			<table class="table table-bordered table-cart" id="cart">
+			  <thead>
+				<tr>
+				  <th></th>
+				  <th>Product</th>
+				  <th width="100">Price/Hour</th>
+				  <th width="200">Quantity(Hour)</th>
+				  <th width="200">Total</th>
+				</tr>
+			  </thead>
+			  <tbody>
+			  </tbody>
+			  <tfoot>
+				<tr>
+				  <th colspan="4" class="total-amount">Total Amount</th>
+				  <td id="total_amount"></td>
+				</tr>
+				<tr>
+				  <th colspan="4"></th>
+				  <td class="text-center">
+					<button id="btn_checkout" type="button" class="btn btn-danger" disabled>Check Out</button>
+				  </td>
+				</tr>
+			  </tfoot>
+			</table>
+		  </div>
+		</div>
+    </section>
 
     <section class="ftco-section ftco-hireme img" style="background-image: url(images/bg_1.jpg)">
     	<div class="overlay"></div>
@@ -598,6 +639,63 @@
   <script src="js/scrollax.min.js"></script>
   
   <script src="js/main.js"></script>
+
+    <script>
+      var carts = [
+        {
+          img: 'images/webdev.png',
+          product: 'Web Development',
+          price: 20,
+          quantity: 0,
+          total: 0
+        },
+        {
+          img: 'images/cg.png',
+          product: 'Web/App Design',
+          price: 25,
+          quantity: 0,
+          total: 0
+        },
+      ];
+      var total = 0;
+      function formatNumber(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+      function refreshTotal() {
+        total = 0;
+        for (var i = 0; i < carts.length; i ++) {
+          total += carts[i].total;
+        }
+        $('#total_amount').html('$' + formatNumber(total));
+        if (total > 0) {
+          $('#btn_checkout').removeAttr('disabled');
+        } else {
+          $('#btn_checkout').addAttr('disabled');
+        }
+      }
+      $(function() {
+        for (var i = 0; i < carts.length; i ++) {
+          var tr = "<tr no='" + i + "'>";
+          tr += "<td class='text-center'><img class='prod-img' src='" + carts[i].img + "'></td>";
+          tr += "<td>" + carts[i].product + "</td>";
+          tr += "<td class='number'>$" + formatNumber(carts[i].price) + "</td>";
+          tr += "<td class='number'><input type='number' class='form-control'></td>";
+          tr += "<td class='number total'></td>";
+          tr += "</tr>";
+          $('#cart tbody').append(tr);
+        }
+        $('#cart tbody input').change(function() {
+          var no = $(this).parents('tr').attr('no');
+          carts[no].quantity = $(this).val();
+          carts[no].total = carts[no].price * carts[no].quantity;
+          $(this).parents('tr').find('td.total').html('$' + formatNumber(carts[no].total));
+          refreshTotal();
+        });
+        $('#btn_checkout').click(function() {
+          document.location.href = "https://www.paypal.me/kristinaivanova";
+        });
+      });
+    </script>
     
   </body>
 </html>
